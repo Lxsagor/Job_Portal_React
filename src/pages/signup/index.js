@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import RegForm from "../../components/signup/RegForm";
 import RegVerification from "../../components/signup/RegVerification";
 import { useStyles } from "../../components/signup/style";
-import Login from "../login/index";
 
 const Registration = () => {
     const classes = useStyles();

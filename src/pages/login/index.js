@@ -1,10 +1,10 @@
-import { useStyles } from "./style";
-import React, { useState, useEffect } from "react";
-import { Box } from "@mui/system";
 import { Button, Grid, TextField, Typography } from "@mui/material";
-import { useNavigate } from "react-router";
+import { Box } from "@mui/system";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { login } from "../../Redux/Action/AuthAction.js";
+import { useStyles } from "./style";
 
 const Login = () => {
     const dispatch = useDispatch();

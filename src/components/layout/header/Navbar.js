@@ -1,12 +1,11 @@
 import { Button, List, ListItem } from "@material-ui/core";
-import { ImportContacts } from "@material-ui/icons";
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { ListItemText } from "@mui/material";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useStyles } from "./style";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
@@ -47,7 +46,7 @@ const Navbar = () => {
     if (!localStorage.getItem("token")) {
         AuthButton = (
             <List style={{ display: "flex" }}>
-                <ListItem disablePadding>
+                <ListItem>
                     <Button
                         variant="text"
                         color="primary"
@@ -60,7 +59,7 @@ const Navbar = () => {
                         Log in
                     </Button>
                 </ListItem>
-                <ListItem disablePadding>
+                <ListItem>
                     <Button
                         variant="contained"
                         onClick={() => navigate("/reg")}
@@ -77,10 +76,10 @@ const Navbar = () => {
     } else {
         AuthButton = (
             <List style={{ display: "flex" }}>
-                <ListItem disablePadding>
+                <ListItem>
                     <ListItemText primary={user} />
                 </ListItem>
-                <ListItem disablePadding>
+                <ListItem>
                     <Button
                         variant="contained"
                         type="submit"

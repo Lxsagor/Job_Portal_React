@@ -7,13 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import MailImage from "../../asset/images/imageMail.png";
 import { resend, verify } from "../../Redux/Action/AuthAction";
 import { useStyles } from "./style";
-import { useNavigate } from "react-router";
 
 const RegVerification = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     const classes = useStyles();
-    const { registerData, errorData } = useSelector((state) => state.auth);
+    const { registerData } = useSelector((state) => state.auth);
 
     const [OTP, setOTP] = useState("");
     function handleChange(OTP) {

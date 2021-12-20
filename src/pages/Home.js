@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { height } from "@mui/system";
 import React from "react";
 
 const Home = () => {

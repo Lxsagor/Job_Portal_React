@@ -1,6 +1,15 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { SET_ACTIVE_STEP, SET_FORGET_USER_DATA, SET_LOGIN_DATA, SET_REGISTER_DATA, SET_RESEND_CODE_DATA, SET_VALIDATATION_ERROR } from "./type";
+import {
+    SET_ACTIVE_STEP,
+    SET_FORGET_USER_DATA,
+    SET_LOGIN_DATA,
+    SET_REGISTER_DATA,
+    SET_RESEND_CODE_DATA,
+    SET_VALIDATATION_ERROR,
+    PROFILE_FIELD_CHANGE,
+    SET_PROFILE_BASIC_DETAILS,
+} from "./type";
 
 toast.configure();
 
@@ -144,7 +153,20 @@ export const login =
                     toast.success("You Logged in Successfully!");
                     dispatch({
                         type: SET_VALIDATATION_ERROR,
-                        payload: {},
+                        payload: {
+                            first_name: { text: "", show: false },
+                            last_name: { text: "", show: false },
+                            fathers_name: { text: "", show: false },
+                            mothers_name: { text: "", show: false },
+                            date_of_birth: { text: "", show: false },
+                            religion: { text: "", show: false },
+                            gender: { text: "", show: false },
+                            marital_status: { text: "", show: false },
+                            nationality: { text: "", show: false },
+                            nid: { text: "", show: false },
+                            passport_no: { text: "", show: false },
+                            blood_group: { text: "", show: false },
+                        },
                     });
 
                     cb();
@@ -275,6 +297,42 @@ export const changePassword =
                     cb();
                 } else if (response.status === "error") {
                     toast.error(response.message);
+                } else if (response.status === "validation_error") {
+                    dispatch({
+                        type: SET_VALIDATATION_ERROR,
+                        payload: response.data,
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+export const fieldChangeHandler = (field, value) => ({
+    type: PROFILE_FIELD_CHANGE,
+    payload: {
+        field: field,
+        value: value,
+    },
+});
+
+export const updateProfileInfo =
+    (data, cb = () => {}) =>
+    (dispatch) => {
+        fetch("http://localhost:8000/api/v1/user/update_basic_info", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                if (response.status === "success") {
+                    cb();
                 } else if (response.status === "validation_error") {
                     dispatch({
                         type: SET_VALIDATATION_ERROR,

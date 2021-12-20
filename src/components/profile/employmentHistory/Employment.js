@@ -1,11 +1,17 @@
-import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
+import { DatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { Container, Grid, Stack, TextField, Typography } from "@mui/material";
+import {
+    Container,
+    Grid, TextareaAutosize,
+    TextField,
+    Typography
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 
 const Employment = () => {
-    const [value, setValue] = React.useState(new Date());
+    const [value, setValue] = React.useState(null);
+
     return (
         <>
             <Container maxWidth="md">
@@ -45,39 +51,48 @@ const Employment = () => {
                                 <LocalizationProvider
                                     dateAdapter={AdapterDateFns}
                                 >
-                                    <Stack spacing={3}>
-                                        <DesktopDatePicker
-                                            label="Starting Date"
-                                            value={value}
-                                            minDate={new Date("1900-01-01")}
-                                            onChange={(newValue) => {
-                                                setValue(newValue);
-                                            }}
-                                            renderInput={(params) => (
-                                                <TextField {...params} />
-                                            )}
-                                        />
-                                    </Stack>
+                                    <DatePicker
+                                        label="Start Date"
+                                        value={value}
+                                        onChange={(newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} />
+                                        )}
+                                    />
                                 </LocalizationProvider>
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <LocalizationProvider
                                     dateAdapter={AdapterDateFns}
                                 >
-                                    <Stack spacing={3}>
-                                        <DesktopDatePicker
-                                            label="Ending Date"
-                                            value={value}
-                                            minDate={new Date("1900-01-01")}
-                                            onChange={(newValue) => {
-                                                setValue(newValue);
-                                            }}
-                                            renderInput={(params) => (
-                                                <TextField {...params} />
-                                            )}
-                                        />
-                                    </Stack>
+                                    <DatePicker
+                                        label="End Date"
+                                        value={value}
+                                        onChange={(newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} />
+                                        )}
+                                    />
                                 </LocalizationProvider>
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={3}>
+                            <Grid item lg={12}>
+                                <TextareaAutosize
+                                    aria-label="minimum height"
+                                    placeholder="Description"
+                                    style={{
+                                        width: "100%",
+                                        height: 100,
+                                        cursor: "auto",
+                                        textAlign: "left",
+                                        padding: "10px",
+                                    }}
+                                />
                             </Grid>
                         </Grid>
                     </Box>
