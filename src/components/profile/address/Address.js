@@ -10,13 +10,29 @@ import {
     Typography,
 } from "@mui/material";
 import "date-fns";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fieldChangeHandler } from "../../../Redux/Action/AuthAction";
 
 const Address = () => {
     const dispatch = useDispatch();
     const { profileForm } = useSelector((state) => state.auth);
+    const [addressForm, setAddressForm] = useState([]);
+
+    useEffect(() => {
+        if (profileForm && profileForm.address) {
+            setAddressForm(profileForm.address);
+        }
+    }, [profileForm]);
+
+    const addressFieldChanger = (index, field, value) => {
+        let newData = [...addressForm];
+
+        newData[index][field] = value;
+        setAddressForm((prevState) => newData);
+        dispatch(fieldChangeHandler("address", newData));
+    };
+
     return (
         <>
             <Container component="main" maxWidth="sm">
@@ -45,13 +61,16 @@ const Address = () => {
                                     fullWidth
                                     label="District"
                                     autoFocus
-                                    value={profileForm.present_district}
+                                    value={
+                                        addressForm &&
+                                        addressForm[0] &&
+                                        addressForm[0].present_district
+                                    }
                                     onChange={(e) =>
-                                        dispatch(
-                                            fieldChangeHandler(
-                                                "present_district",
-                                                e.target.value
-                                            )
+                                        addressFieldChanger(
+                                            0,
+                                            "present_district",
+                                            e.target.value
                                         )
                                     }
                                 />
@@ -60,13 +79,16 @@ const Address = () => {
                                 <TextField
                                     fullWidth
                                     label="Thana"
-                                    value={profileForm.present_thana}
+                                    value={
+                                        addressForm &&
+                                        addressForm[0] &&
+                                        addressForm[0].present_thana
+                                    }
                                     onChange={(e) =>
-                                        dispatch(
-                                            fieldChangeHandler(
-                                                "present_thana",
-                                                e.target.value
-                                            )
+                                        addressFieldChanger(
+                                            0,
+                                            "present_thana",
+                                            e.target.value
                                         )
                                     }
                                 />
@@ -77,13 +99,16 @@ const Address = () => {
                                     fullWidth
                                     label="Post office"
                                     autoFocus
-                                    value={profileForm.present_p_o}
+                                    value={
+                                        addressForm &&
+                                        addressForm[0] &&
+                                        addressForm[0].present_p_o
+                                    }
                                     onChange={(e) =>
-                                        dispatch(
-                                            fieldChangeHandler(
-                                                "present_p_o",
-                                                e.target.value
-                                            )
+                                        addressFieldChanger(
+                                            0,
+                                            "present_p_o",
+                                            e.target.value
                                         )
                                     }
                                 />
@@ -92,13 +117,16 @@ const Address = () => {
                                 <TextField
                                     fullWidth
                                     label="House/Village/Road"
-                                    value={profileForm.present_house_road_vill}
+                                    value={
+                                        addressForm &&
+                                        addressForm[0] &&
+                                        addressForm[0].present_house_road_vill
+                                    }
                                     onChange={(e) =>
-                                        dispatch(
-                                            fieldChangeHandler(
-                                                "present_house_road_vill",
-                                                e.target.value
-                                            )
+                                        addressFieldChanger(
+                                            0,
+                                            "present_house_road_vill",
+                                            e.target.value
                                         )
                                     }
                                 />
@@ -114,13 +142,16 @@ const Address = () => {
                                     fullWidth
                                     label="District"
                                     autoFocus
-                                    value={profileForm.permanent_district}
+                                    value={
+                                        addressForm &&
+                                        addressForm[1] &&
+                                        addressForm[1].permanent_district
+                                    }
                                     onChange={(e) =>
-                                        dispatch(
-                                            fieldChangeHandler(
-                                                "permanent_district",
-                                                e.target.value
-                                            )
+                                        addressFieldChanger(
+                                            1,
+                                            "permanent_district",
+                                            e.target.value
                                         )
                                     }
                                 />
@@ -129,13 +160,16 @@ const Address = () => {
                                 <TextField
                                     fullWidth
                                     label="Thana"
-                                    value={profileForm.permanent_thana}
+                                    value={
+                                        addressForm &&
+                                        addressForm[1] &&
+                                        addressForm[1].permanent_thana
+                                    }
                                     onChange={(e) =>
-                                        dispatch(
-                                            fieldChangeHandler(
-                                                "permanent_thana",
-                                                e.target.value
-                                            )
+                                        addressFieldChanger(
+                                            1,
+                                            "permanent_thana",
+                                            e.target.value
                                         )
                                     }
                                 />
@@ -146,13 +180,16 @@ const Address = () => {
                                     fullWidth
                                     label="Post office"
                                     autoFocus
-                                    value={profileForm.permanent_p_o}
+                                    value={
+                                        addressForm &&
+                                        addressForm[1] &&
+                                        addressForm[1].permanent_p_o
+                                    }
                                     onChange={(e) =>
-                                        dispatch(
-                                            fieldChangeHandler(
-                                                "permanent_p_o",
-                                                e.target.value
-                                            )
+                                        addressFieldChanger(
+                                            1,
+                                            "permanent_p_o",
+                                            e.target.value
                                         )
                                     }
                                 />
@@ -162,14 +199,15 @@ const Address = () => {
                                     fullWidth
                                     label="House/Village/Road"
                                     value={
-                                        profileForm.permanent_house_road_vill
+                                        addressForm &&
+                                        addressForm[1] &&
+                                        addressForm[1].permanent_house_road_vill
                                     }
                                     onChange={(e) =>
-                                        dispatch(
-                                            fieldChangeHandler(
-                                                "permanent_house_road_vill",
-                                                e.target.value
-                                            )
+                                        addressFieldChanger(
+                                            1,
+                                            "permanent_house_road_vill",
+                                            e.target.value
                                         )
                                     }
                                 />

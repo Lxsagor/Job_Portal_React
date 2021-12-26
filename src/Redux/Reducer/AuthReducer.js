@@ -6,11 +6,17 @@ import {
     SET_VALIDATATION_ERROR,
     PROFILE_FIELD_CHANGE,
     SET_PROFILE_BASIC_DETAILS,
+    FETCH_USER_PROFILE_FORM,
+    SET_UPDATE_VALIDATATION_ERROR,
 } from "../Action/type";
+// import { useSelector } from "react-redux";
+
+// const { loginData } = useSelector((state) => state.auth);
 
 const initialState = {
     registerData: null,
-    errorData: {
+    errorData: {},
+    updateerrorData: {
         first_name: { text: "", show: false },
         last_name: { text: "", show: false },
         fathers_name: { text: "", show: false },
@@ -23,6 +29,11 @@ const initialState = {
         nid: { text: "", show: false },
         passport_no: { text: "", show: false },
         blood_group: { text: "", show: false },
+        primary_mobile: { text: "", show: false },
+        primary_email: { text: "", show: false },
+        summary_yourself: { text: "", show: false },
+        github_link: { text: "", show: false },
+        linkedin_link: { text: "", show: false },
     },
     activeStep: 0,
     forgetUserData: {},
@@ -39,6 +50,8 @@ const initialState = {
         nid: "",
         passport_no: "",
         blood_group: "",
+        primary_mobile: "",
+        primary_email: "",
         present_district: "",
         present_thana: "",
         present_p_o: "",
@@ -47,19 +60,22 @@ const initialState = {
         permanent_thana: "",
         permanent_p_o: "",
         permanent_house_road_vill: "",
+        summary_yourself: "",
+        github_link: "",
+        linkedin_link: "",
+        address: [],
     },
-    profileAddress: {
-        present_district: "",
-        present_thana: "",
-        present_p_o: "",
-        present_house_road_vill: "",
-        permanent_district: "",
-        permanent_thana: "",
-        permanent_p_o: "",
-        permanent_house_road_vill: "",
-    },
+    // profileAddress: {
+    //     present_district: "",
+    //     present_thana: "",
+    //     present_p_o: "",
+    //     present_house_road_vill: "",
+    //     permanent_district: "",
+    //     permanent_thana: "",
+    //     permanent_p_o: "",
+    //     permanent_house_road_vill: "",
+    // },
     loginData: {},
-    profileBasicData: {},
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -73,6 +89,11 @@ const AuthReducer = (state = initialState, action) => {
             return {
                 ...state,
                 errorData: action.payload,
+            };
+        case SET_UPDATE_VALIDATATION_ERROR:
+            return {
+                ...state,
+                updateerrorData: action.payload,
             };
         case SET_ACTIVE_STEP:
             return {
@@ -106,6 +127,22 @@ const AuthReducer = (state = initialState, action) => {
                     ...state.profileForm,
                     [action.payload.field]: action.payload.value,
                 },
+            };
+        // case SET_USER_PERMANENT_ADDRESS:
+        //     return {
+        //         ...state,
+        //         profileForm: {
+        //             ...state.profileForm,
+        //             address: [
+
+        //             ]
+        //             [action.payload.field]: action.payload.value,
+        //         },
+        //     };
+        case FETCH_USER_PROFILE_FORM:
+            return {
+                ...state,
+                profileForm: action.payload,
             };
 
         default:

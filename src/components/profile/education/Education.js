@@ -1,12 +1,46 @@
-import { Container, Grid, TextField, Typography } from "@mui/material";
+import {
+    Container,
+    Grid,
+    TextField,
+    Typography,
+    Button,
+    Dialog,
+    DialogContent,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
-import * as React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import EducationDialog from "../EducationDialog";
 
 function Education() {
+    // const { profileForm } = useSelector((state) => state.auth);
+
+    const [educations, setEducations] = useState([]);
+
+    const addEducationHandler = () => {
+        let existEducation = [...educations];
+        existEducation.push({
+            education_level: null,
+            degree: null,
+            group: null,
+            institute: null,
+            country: null,
+            result: null,
+            passing_year: null,
+            duration: null,
+            achievement: "",
+        });
+
+        setEducations(existEducation);
+    };
+
+    const [addEducationDialog, setAddEducationDialog] = useState(false);
+
     return (
         <>
             <Container component="main" maxWidth="sm">
+                {/* {console.log(profileForm.education)} */}
                 <Box
                     sx={{
                         display: "flex",
@@ -17,7 +51,29 @@ function Education() {
                     <Typography component="h1" variant="h5">
                         Education
                     </Typography>
-                    <Box component="form" noValidate sx={{ mt: 3 }}>
+
+                    <Box textAlign="right">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => setAddEducationDialog(true)}
+                        >
+                            Add Education
+                        </Button>
+                    </Box>
+
+                    <Dialog
+                        maxWidth="sm"
+                        fullWidth
+                        open={addEducationDialog}
+                        onClose={() => setAddEducationDialog(false)}
+                    >
+                        <DialogContent>
+                            <EducationDialog />
+                        </DialogContent>
+                    </Dialog>
+
+                    {/* <Box component="form" noValidate sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -150,7 +206,7 @@ function Education() {
                                 <TextField fullWidth label="Achievement" />
                             </Grid>
                         </Grid>
-                    </Box>
+                    </Box> */}
                 </Box>
             </Container>
         </>

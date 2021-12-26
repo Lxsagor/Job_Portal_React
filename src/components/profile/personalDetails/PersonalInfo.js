@@ -10,13 +10,14 @@ import {
     Typography,
 } from "@mui/material";
 import "date-fns";
+
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fieldChangeHandler } from "../../../Redux/Action/AuthAction";
 
 const PersonalInfo = () => {
     const dispatch = useDispatch();
-    const { profileForm, errorData } = useSelector((state) => state.auth);
+    const { profileForm, updateerrorData } = useSelector((state) => state.auth);
 
     return (
         <>
@@ -49,8 +50,8 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.first_name.show}
-                                    helperText={errorData.first_name.text}
+                                    error={updateerrorData.first_name.show}
+                                    helperText={updateerrorData.first_name.text}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -69,8 +70,8 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.last_name.show}
-                                    helperText={errorData.last_name.text}
+                                    error={updateerrorData.last_name.show}
+                                    helperText={updateerrorData.last_name.text}
                                 />
                             </Grid>
 
@@ -79,7 +80,6 @@ const PersonalInfo = () => {
                                     autoComplete="father's name"
                                     fullWidth
                                     label="Father's Name"
-                                    autoFocus
                                     value={profileForm.fathers_name}
                                     onChange={(e) =>
                                         dispatch(
@@ -89,8 +89,10 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.fathers_name.show}
-                                    helperText={errorData.fathers_name.text}
+                                    error={updateerrorData.fathers_name.show}
+                                    helperText={
+                                        updateerrorData.fathers_name.text
+                                    }
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -107,8 +109,10 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.mothers_name.show}
-                                    helperText={errorData.mothers_name.text}
+                                    error={updateerrorData.mothers_name.show}
+                                    helperText={
+                                        updateerrorData.mothers_name.text
+                                    }
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -127,9 +131,11 @@ const PersonalInfo = () => {
                                                 )
                                             );
                                         }}
-                                        error={errorData.date_of_birth.show}
+                                        error={
+                                            updateerrorData.date_of_birth.show
+                                        }
                                         helperText={
-                                            errorData.date_of_birth.text
+                                            updateerrorData.date_of_birth.text
                                         }
                                         renderInput={(params) => (
                                             <TextField {...params} />
@@ -152,8 +158,8 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.religion.show}
-                                    helperText={errorData.religion.text}
+                                    error={updateerrorData.religion.show}
+                                    helperText={updateerrorData.religion.text}
                                 >
                                     <MenuItem key={1} value="islam">
                                         Islam
@@ -186,8 +192,8 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.gender.show}
-                                    helperText={errorData.gender.text}
+                                    error={updateerrorData.gender.show}
+                                    helperText={updateerrorData.gender.text}
                                     select
                                     label="Gender"
                                 >
@@ -218,8 +224,10 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.marital_status.show}
-                                    helperText={errorData.marital_status.text}
+                                    error={updateerrorData.marital_status.show}
+                                    helperText={
+                                        updateerrorData.marital_status.text
+                                    }
                                 >
                                     <MenuItem key={1} value="single">
                                         Single
@@ -252,8 +260,10 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.nationality.show}
-                                    helperText={errorData.nationality.text}
+                                    error={updateerrorData.nationality.show}
+                                    helperText={
+                                        updateerrorData.nationality.text
+                                    }
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -269,8 +279,8 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.nid.show}
-                                    helperText={errorData.nid.text}
+                                    error={updateerrorData.nid.show}
+                                    helperText={updateerrorData.nid.text}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -286,8 +296,10 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.passport_no.show}
-                                    helperText={errorData.passport_no.text}
+                                    error={updateerrorData.passport_no.show}
+                                    helperText={
+                                        updateerrorData.passport_no.text
+                                    }
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -303,8 +315,50 @@ const PersonalInfo = () => {
                                             )
                                         )
                                     }
-                                    error={errorData.blood_group.show}
-                                    helperText={errorData.blood_group.text}
+                                    error={updateerrorData.blood_group.show}
+                                    helperText={
+                                        updateerrorData.blood_group.text
+                                    }
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Phone"
+                                    autoComplete="phone"
+                                    value={profileForm.primary_mobile}
+                                    onChange={(e) =>
+                                        dispatch(
+                                            fieldChangeHandler(
+                                                "primary_mobile",
+                                                e.target.value
+                                            )
+                                        )
+                                    }
+                                    error={updateerrorData.primary_mobile.show}
+                                    helperText={
+                                        updateerrorData.primary_mobile.text
+                                    }
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Email"
+                                    autoComplete="email"
+                                    value={profileForm.primary_email}
+                                    onChange={(e) =>
+                                        dispatch(
+                                            fieldChangeHandler(
+                                                "primary_email",
+                                                e.target.value
+                                            )
+                                        )
+                                    }
+                                    error={updateerrorData.primary_email.show}
+                                    helperText={
+                                        updateerrorData.primary_email.text
+                                    }
                                 />
                             </Grid>
                             <Grid item>{/* photo */}</Grid>

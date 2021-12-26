@@ -1,14 +1,15 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
+    FETCH_USER_PROFILE_FORM,
+    PROFILE_FIELD_CHANGE,
     SET_ACTIVE_STEP,
     SET_FORGET_USER_DATA,
     SET_LOGIN_DATA,
     SET_REGISTER_DATA,
     SET_RESEND_CODE_DATA,
     SET_VALIDATATION_ERROR,
-    PROFILE_FIELD_CHANGE,
-    SET_PROFILE_BASIC_DETAILS,
+    SET_UPDATE_VALIDATATION_ERROR,
 } from "./type";
 
 toast.configure();
@@ -152,21 +153,8 @@ export const login =
                     });
                     toast.success("You Logged in Successfully!");
                     dispatch({
-                        type: SET_VALIDATATION_ERROR,
-                        payload: {
-                            first_name: { text: "", show: false },
-                            last_name: { text: "", show: false },
-                            fathers_name: { text: "", show: false },
-                            mothers_name: { text: "", show: false },
-                            date_of_birth: { text: "", show: false },
-                            religion: { text: "", show: false },
-                            gender: { text: "", show: false },
-                            marital_status: { text: "", show: false },
-                            nationality: { text: "", show: false },
-                            nid: { text: "", show: false },
-                            passport_no: { text: "", show: false },
-                            blood_group: { text: "", show: false },
-                        },
+                        type: FETCH_USER_PROFILE_FORM,
+                        payload: response.data.user.user_info,
                     });
 
                     cb();
@@ -318,7 +306,8 @@ export const fieldChangeHandler = (field, value) => ({
 
 export const updateProfileInfo =
     (data, cb = () => {}) =>
-    (dispatch) => {
+    (dispatch, getStore) => {
+        const { updateerrorData } = getStore().auth;
         fetch("http://localhost:8000/api/v1/user/update_basic_info", {
             method: "POST",
             headers: {
@@ -332,11 +321,40 @@ export const updateProfileInfo =
             .then((response) => {
                 console.log(response);
                 if (response.status === "success") {
+                    dispatch({
+                        type: SET_UPDATE_VALIDATATION_ERROR,
+                        payload: {
+                            first_name: { text: "", show: false },
+                            last_name: { text: "", show: false },
+                            fathers_name: { text: "", show: false },
+                            mothers_name: { text: "", show: false },
+                            date_of_birth: { text: "", show: false },
+                            religion: { text: "", show: false },
+                            gender: { text: "", show: false },
+                            marital_status: { text: "", show: false },
+                            nationality: { text: "", show: false },
+                            nid: { text: "", show: false },
+                            passport_no: { text: "", show: false },
+                            blood_group: { text: "", show: false },
+                            primary_mobile: { text: "", show: false },
+                            primary_email: { text: "", show: false },
+                            summary_yourself: { text: "", show: false },
+                            github_link: { text: "", show: false },
+                            linkedin_link: { text: "", show: false },
+                        },
+                    });
                     cb();
                 } else if (response.status === "validation_error") {
+                    let items = { ...updateerrorData };
+                    Object.keys(response.data).forEach((key) => {
+                        items[key] = {
+                            text: response.data[key][0],
+                            show: true,
+                        };
+                    });
                     dispatch({
-                        type: SET_VALIDATATION_ERROR,
-                        payload: response.data,
+                        type: SET_UPDATE_VALIDATATION_ERROR,
+                        payload: items,
                     });
                 }
             })
